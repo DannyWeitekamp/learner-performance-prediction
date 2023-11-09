@@ -182,7 +182,8 @@ if __name__ == "__main__":
             saver = Saver(args.savedir, param_str)
             train(train_data, val_data, model, optimizer, logger, saver, args.num_epochs, args.batch_size)
             break
-        except RuntimeError:
+        except RuntimeError as e:
+            print(e)
             args.batch_size = args.batch_size // 2
             print(f'Batch does not fit on gpu, reducing size to {args.batch_size}')
     

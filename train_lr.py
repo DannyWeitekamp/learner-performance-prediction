@@ -36,6 +36,8 @@ if __name__ == "__main__":
     train = X[np.where(np.isin(user_ids, users_train))]
     test = X[np.where(np.isin(user_ids, users_test))]
 
+    print(train)
+
     # First 5 columns are the original dataset, including label in column 3
     X_train, y_train = train[:, 5:], train[:, 3].toarray().flatten()
     X_test, y_test = test[:, 5:], test[:, 3].toarray().flatten()

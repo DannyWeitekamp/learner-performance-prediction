@@ -111,7 +111,10 @@ def df_to_sparse(df, Q_mat, active_features):
 
                 # Past attempts for item
                 if 'ic' in active_features:
-                    onehot = OneHotEncoder(n_values=df_user[:, 1].max() + 1)
+                    n_values = df_user[:, 1].max() + 1
+                    #onehot = OneHotEncoder(n_values=df_user[:, 1].max() + 1)
+                    #print(df_user[:, 1].max() + 1)
+                    onehot = OneHotEncoder(categories=[np.arange(n_values)])
                     item_ids_onehot = onehot.fit_transform(item_ids).toarray()
                     tmp = np.vstack((np.zeros(item_ids_onehot.shape[1]), np.cumsum(item_ids_onehot, 0)))[:-1]
                     attempts[:, -2] = phi(tmp[np.arange(num_items_user), df_user[:, 1]])
@@ -163,7 +166,10 @@ def df_to_sparse(df, Q_mat, active_features):
 
                 # Past wins for item
                 if 'ic' in active_features:
-                    onehot = OneHotEncoder(n_values=df_user[:, 1].max() + 1)
+                    # onehot = OneHotEncoder(n_values=df_user[:, 1].max() + 1)
+                    n_values = df_user[:, 1].max() + 1
+                    onehot = OneHotEncoder(categories=[np.arange(n_values)])
+                    # onehot = OneHotEncoder(n_values=df_user[:, 1].max() + 1)
                     item_ids_onehot = onehot.fit_transform(item_ids).toarray()
                     tmp = np.vstack((np.zeros(item_ids_onehot.shape[1]), np.cumsum(item_ids_onehot * labels, 0)))[:-1]
                     wins[:, -2] = phi(tmp[np.arange(num_items_user), df_user[:, 1]])
