@@ -195,6 +195,7 @@ def df_to_sparse(df, Q_mat, active_features):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Encode sparse feature matrix for logistic regression.')
     parser.add_argument('--dataset', type=str)
+    parser.add_argument('-sim', action='store_true')
     parser.add_argument('-u', action='store_true',
                         help='If True, include user one hot encoding.')
     parser.add_argument('-i', action='store_true',
@@ -215,10 +216,15 @@ if __name__ == "__main__":
                         help='If True, historical counts are encoded as time windows.')
     args = parser.parse_args()
 
-    data_path = os.path.join('data', args.dataset)
-    df = pd.read_csv(os.path.join(data_path, 'preprocessed_data.csv'), sep="\t")
+
+    _dir = "simulation/simulated-data" if args.sim else "data"
+    _file = f"{args.dataset}.csv" if args.sim else "preprocessed_data.csv"
+
+    orig_data_path = os.path.join("data", args.dataset)
+    data_path = os.path.join(_dir, args.dataset)
+    df = pd.read_csv(os.path.join(data_path, _file), sep="\t")
     df = df[["user_id", "item_id", "timestamp", "correct", "skill_id"]]
-    Q_mat = sparse.load_npz(os.path.join(data_path, 'q_mat.npz')).toarray()
+    Q_mat = sparse.load_npz(os.path.join(orig_data_path, 'q_mat.npz')).toarray()
 
     all_features = ['u', 'i', 's', 'ic', 'sc', 'tc', 'w', 'a', 'tw']
     active_features = [features for features in all_features if vars(args)[features]]
