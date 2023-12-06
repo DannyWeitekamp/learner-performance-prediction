@@ -3,3 +3,5 @@ runs
 save
 simulation/models/
 simulation/extended-data/
+*.npz
+*~lock*
