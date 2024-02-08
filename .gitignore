@@ -5,3 +5,4 @@ simulation/models/
 simulation/extended-data/
 *.npz
 *~lock*
+_data/
