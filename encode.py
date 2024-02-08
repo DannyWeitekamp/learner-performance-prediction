@@ -59,6 +59,7 @@ def df_to_sparse(df, Q_mat, active_features):
 
     # Build feature rows by iterating over users
     for user_id in df["user_id"].unique():
+        print(f'run - {user_id}')
         df_user = df[df["user_id"] == user_id][["user_id", "item_id", "timestamp", "correct", "skill_id"]].copy()
         df_user = df_user.values
         num_items_user = df_user.shape[0]

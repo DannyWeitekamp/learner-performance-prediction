@@ -211,4 +211,6 @@ if __name__ == "__main__":
     test_df["DKT2"] = test_preds
     test_df.to_csv(f'data/{args.dataset}/preprocessed_data_test.csv', sep="\t", index=False)
 
+    torch.save(model, f'data/{args.dataset}/real-dkt-model.sav')
+
     print("auc_test = ", roc_auc_score(test_df["correct"], test_preds))
