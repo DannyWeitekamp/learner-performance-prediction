@@ -19,8 +19,8 @@ class DKT2(nn.Module):
         super(DKT2, self).__init__()
         self.embed_size = embed_size
 
-        self.item_embeds = nn.Embedding(num_items + 1, embed_size // 2, padding_idx=0)
-        self.skill_embeds = nn.Embedding(num_skills + 1, embed_size // 2, padding_idx=0)
+        self.item_embeds = nn.Embedding(num_items + 2, embed_size // 2, padding_idx=0)
+        self.skill_embeds = nn.Embedding(num_skills + 2, embed_size // 2, padding_idx=0)
 
         self.lstm = nn.LSTM(2 * embed_size, hid_size, num_hid_layers, batch_first=True)
         self.dropout = nn.Dropout(p=drop_prob)
@@ -48,7 +48,8 @@ class DKT2(nn.Module):
         return inputs
 
     def get_query(self, item_ids, skill_ids):
-        item_ids = self.item_embeds(item_ids)
-        skill_ids = self.skill_embeds(skill_ids)
-        query = torch.cat([item_ids, skill_ids], dim=-1)
+        # Add +1 so that -1 counts as the zero vector 
+        item_embedding = self.item_embeds(item_ids+1) 
+        skill_embedding = self.skill_embeds(skill_ids+1)
+        query = torch.cat([item_embedding, skill_embedding], dim=-1)
         return query
