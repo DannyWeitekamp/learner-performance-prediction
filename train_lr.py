@@ -27,8 +27,8 @@ if __name__ == "__main__":
     # Load sparse dataset
     X = csr_matrix(load_npz(args.X_file))
 
-    train_df = pd.read_csv(f'data/{args.dataset}/preprocessed_data_train.csv', sep="\t")
-    test_df = pd.read_csv(f'data/{args.dataset}/preprocessed_data_test.csv', sep="\t")
+    train_df = pd.read_csv(f'./data/{args.dataset}/preprocessed_data_train.csv', sep="\t")
+    test_df = pd.read_csv(f'./data/{args.dataset}/preprocessed_data_test.csv', sep="\t")
     
     # Student-wise train-test split
     user_ids = X[:, 0].toarray().flatten()

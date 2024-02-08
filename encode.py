@@ -59,7 +59,7 @@ def df_to_sparse(df, Q_mat, active_features):
 
     # Build feature rows by iterating over users
     for user_id in df["user_id"].unique():
-        print(f'run - {user_id}')
+        # print(f'run - {user_id}')
         df_user = df[df["user_id"] == user_id][["user_id", "item_id", "timestamp", "correct", "skill_id"]].copy()
         df_user = df_user.values
         num_items_user = df_user.shape[0]
@@ -218,14 +218,19 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    _dir = "simulation/simulated-data" if args.sim else "data"
-    _file = f"{args.dataset}.csv" if args.sim else "preprocessed_data.csv"
+    # _dir = "simulation/simulated-data" if args.sim else "data"
+    # _file = f"{args.dataset}.csv" if args.sim else "preprocessed_data.csv"
 
-    orig_data_path = os.path.join("data", args.dataset)
-    data_path = os.path.join(_dir, args.dataset)
-    df = pd.read_csv(os.path.join(data_path, _file), sep="\t")
+    # orig_data_path = os.path.join("data", args.dataset)
+    # data_path = os.path.join(_dir, args.dataset)
+    # df = pd.read_csv(os.path.join(data_path, _file), sep="\t")
+    # df = df[["user_id", "item_id", "timestamp", "correct", "skill_id"]]
+    # Q_mat = sparse.load_npz(os.path.join(orig_data_path, 'q_mat.npz')).toarray()
+
+    data_path = os.path.join('data', args.dataset)
+    df = pd.read_csv(os.path.join(data_path, 'preprocessed_data.csv'), sep="\t")
     df = df[["user_id", "item_id", "timestamp", "correct", "skill_id"]]
-    Q_mat = sparse.load_npz(os.path.join(orig_data_path, 'q_mat.npz')).toarray()
+    Q_mat = sparse.load_npz(os.path.join(data_path, 'q_mat.npz')).toarray()
 
     all_features = ['u', 'i', 's', 'ic', 'sc', 'tc', 'w', 'a', 'tw']
     active_features = [features for features in all_features if vars(args)[features]]
