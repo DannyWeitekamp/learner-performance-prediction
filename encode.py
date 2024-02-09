@@ -217,11 +217,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    _dir = "simulation/simulated-data" if args.sim else "data"
+    #_dir = "simulation/simulated-data" if args.sim else "data"
     _file = f"{args.dataset}.csv" if args.sim else "preprocessed_data.csv"
 
-    orig_data_path = os.path.join("data", args.dataset)
-    data_path = os.path.join(_dir, args.dataset)
+    orig_data_path = os.path.join("../../data/real", args.dataset)
+    data_path = args.dataset
     df = pd.read_csv(os.path.join(data_path, _file), sep="\t")
     df = df[["user_id", "item_id", "timestamp", "correct", "skill_id"]]
     Q_mat = sparse.load_npz(os.path.join(orig_data_path, 'q_mat.npz')).toarray()
