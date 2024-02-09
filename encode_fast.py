@@ -242,9 +242,8 @@ if __name__ == "__main__":
     #_dir = "simulation/simulated-data" if args.sim else "data"
     _file = f"{args.dataset}.csv" if args.sim else "preprocessed_data.csv"
 
-    orig_data_path = os.path.join("../../data/real", args.dataset)
-    data_path = args.dataset
-    df = pd.read_csv(os.path.join(data_path, _file), sep="\t")
+    orig_data_path = os.path.join("./data/real", args.dataset)
+    df = pd.read_csv(os.path.join(orig_data_path, _file), sep="\t")
     df = df[["user_id", "item_id", "timestamp", "correct", "skill_id"]]
     Q_mat = sparse.load_npz(os.path.join(orig_data_path, 'q_mat.npz')).toarray()
 
@@ -253,4 +252,4 @@ if __name__ == "__main__":
     features_suffix = ''.join(active_features)
 
     X = df_to_sparse(df, Q_mat, active_features)
-    sparse.save_npz(os.path.join(data_path, f"X-{features_suffix}"), X)
+    sparse.save_npz(os.path.join(orig_data_path, f"X-{features_suffix}"), X)

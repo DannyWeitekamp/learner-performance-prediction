@@ -6,4 +6,5 @@ simulation/extended-data/
 *.npz
 *~lock*
 _data/
-gen_data_*
+simulation/*
+data/real

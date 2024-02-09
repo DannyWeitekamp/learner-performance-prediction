@@ -12,8 +12,10 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 from utils.queue import TimeWindowQueue
 
 
-def phi(x):
+def phi_not_vectorized(x):
     return np.log(1 + x)
+
+phi = np.vectorize(phi_not_vectorized)
 
 
 WINDOW_LENGTHS = [3600 * 24 * 30, 3600 * 24 * 7, 3600 * 24, 3600]
@@ -216,7 +218,6 @@ if __name__ == "__main__":
     parser.add_argument('-tw', action='store_true',
                         help='If True, historical counts are encoded as time windows.')
     args = parser.parse_args()
-
 
     #_dir = "simulation/simulated-data" if args.sim else "data"
     _file = f"{args.dataset}.csv" if args.sim else "preprocessed_data.csv"
