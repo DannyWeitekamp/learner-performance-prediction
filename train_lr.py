@@ -4,6 +4,7 @@ import pandas as pd
 from scipy.sparse import load_npz, csr_matrix
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, accuracy_score, log_loss, brier_score_loss
+import pickle
 
 
 def compute_metrics(y_pred, y):
@@ -26,8 +27,8 @@ if __name__ == "__main__":
     # Load sparse dataset
     X = csr_matrix(load_npz(args.X_file))
 
-    train_df = pd.read_csv(f'data/{args.dataset}/preprocessed_data_train.csv', sep="\t")
-    test_df = pd.read_csv(f'data/{args.dataset}/preprocessed_data_test.csv', sep="\t")
+    train_df = pd.read_csv(f'./data/{args.dataset}/preprocessed_data_train.csv', sep="\t")
+    test_df = pd.read_csv(f'./data/{args.dataset}/preprocessed_data_test.csv', sep="\t")
     
     # Student-wise train-test split
     user_ids = X[:, 0].toarray().flatten()
@@ -45,6 +46,8 @@ if __name__ == "__main__":
     # Train
     model = LogisticRegression(solver="lbfgs", max_iter=args.iter)
     model.fit(X_train, y_train)
+
+    pickle.dump(model, open(f'data/{args.dataset}/real-model.sav', 'wb'))
 
     y_pred_train = model.predict_proba(X_train)[:, 1]
     y_pred_test = model.predict_proba(X_test)[:, 1]

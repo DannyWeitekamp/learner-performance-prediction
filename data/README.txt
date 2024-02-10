@@ -1,0 +1,1 @@
+This directory should contain the real and simulated data. Simulation data folders should have a name like sim-${GENERATING_MODEL}. Subdirectories should be named by dataset e.g. real/assistments09 or sim-BestLR/statics
