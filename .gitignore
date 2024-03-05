@@ -7,4 +7,5 @@ simulation/extended-data/
 *~lock*
 _data/
 simulation/*
+simulation-result/*
 data/real
